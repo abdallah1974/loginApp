@@ -98,7 +98,6 @@ string useremail(userProfil newUser,vector<userProfil> users){
                     i = 0;
                 }
             }
-            break;
        }else {
             cout << "\nNot Valid syntax" << endl ;
             cout << "email ex examble@gmail.com " << endl ;
@@ -166,9 +165,7 @@ string user_name(userProfil newUser){
 }
 //--------------------------------------------
 void showCondtions(){
-
-
-    cout << "\n..... create a Password ....." << endl;
+    cout << "..... create a Password ....." << endl;
     cout << "it should contain at least\nan uppercase letter, lowercase letter, number and special char"<<endl;
     cout << "special chars like (!@#_$ or space)" << endl;
     cout << "and it must be 12 char or more ... " << endl;
@@ -241,53 +238,46 @@ void reEnterPassword(string& password){
     }
 }
 //--------------------------------------------
-string Password(userProfil newUser,vector<userProfil> users){
+void storeUser(string password){
+    fstream usersFile;
+    usersFile.open("users.txt", ios::app);
+    usersFile << userfullname(newUser) ;
+    usersFile << userage(newUser);
+    usersFile << usergender(newUser);
+    usersFile << usermobile(newUser);
+    usersFile << user_name(newUser);
+    usersFile << useremail(newUser,users);
+    usersFile << password;
+    usersFile << endl;
+
+}
+void Password(){
 
     string  password;
     showCondtions();
     secretPassword(password);
     checkValidation(password);
     reEnterPassword(password);
-
-    return password;
+    storeUser(password)
 }
-//-----------------------------------
-void registerUser(userProfil newUser,vector<userProfil> users){
-    fstream usersFile;
-    usersFile.open("users.txt", ios::app);
-    usersFile << endl;
-    usersFile << userfullname(newUser) << " ";
-    usersFile << userage(newUser)<< " ";
-    usersFile << usergender(newUser)<< " ";
-    usersFile << usermobile(newUser)<< " ";
-    usersFile << user_name(newUser)<< " ";
-    usersFile << useremail(newUser,users)<< " ";
-    usersFile << Password(newUser, users)<< " ";
-
-}
-
 //--------------------------------------------
-
 int main()
 {
     vector<userProfil> users;
     userProfil newUser;
-    int choice;
-
     cout << "welcome to login App"<< endl;
     loadExistingUsers(users);
 
-    cout << "enter 1 to Register" << endl;
-    cout << "enter 2 to Login" << endl;
-    cout << "enter 3 to change password" << endl;
-    cout << "enter 4 to Exit" << endl;
-    cin >> choice;
-    if (choice == 1){
-        registerUser(newUser,users);
-    }else if (choice == 4){
-        _Exit(0);
+    for(userProfil user: users){
+        cout << user.email << " " << user.password << " " << user.mobilenumber << endl;
     }
-
+    userfullname(newUser) ;
+    userage(newUser);
+    usergender(newUser);
+    usermobile(newUser);
+    user_name(newUser);
+    useremail(newUser,users);
+    Password();
 
     return 0;
 }
