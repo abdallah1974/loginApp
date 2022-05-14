@@ -147,17 +147,17 @@ string usermobile(userProfil newUser){
 }
 //--------------------------------------------
 string user_name(userProfil newUser){
-    cout << "user_name like examble_login  " << endl ;
+    cout << "user_name like AhmedMamdoh  " << endl ;
     cout << "Enter user_name: "  ;
     cin >> newUser.username;
-    regex u("([a-zA-Z]+[_]?[a-zA-Z]+)");
+    regex u("([a-zA-Z]+[a-zA-Z]+)");
     while (true){
         if (regex_match(newUser.username.begin(), newUser.username.end(), u)){
             cout << "Valid user_name" << endl ;
             break;
         }else {
             cout << "unvaild user name" << endl;
-            cout << "user_name like examble_login  " << endl ;
+            cout << "user_name like AhmedMamdoh  " << endl ;
             cout << "Enter user_name: "  ;
             cin >> newUser.username;
         }
