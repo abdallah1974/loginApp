@@ -15,13 +15,14 @@ void loadExistingUsers(fstream& usersFile,vector<userProfil>& users){
         while (!usersFile.eof()){
             userProfil nextUser;
             usersFile >> nextUser.fname;
-            usersFile >> nextUser.lname;
+            usersFile >> nextUser.age;
+            usersFile >> nextUser.gender;
+            usersFile >> nextUser.mobilenumber;
+            usersFile >> nextUser.username;
             usersFile >> nextUser.email;
             usersFile>> nextUser.password;
-            usersFile >> nextUser.gender;
-            usersFile >> nextUser.username;
-            usersFile >> nextUser.age;
-            usersFile >> nextUser.mobilenumber;
+
+
             users.push_back(nextUser);
         }
 
@@ -44,6 +45,7 @@ string userfullname(userProfil newUser){
     regex n("([a-zA-Z]+[ ]+[a-zA-Z]+)");
 
     cout << endl ;
+    return newUser.fname;
 }
 //--------------------------------------------
 string userage(userProfil newUser){
@@ -251,6 +253,7 @@ void registerUser(userProfil newUser,vector<userProfil> users){
     usersFile << user_name(newUser)<< " ";
     usersFile << useremail(newUser,users)<< " ";
     usersFile << encryption(Password(newUser, users)) << " ";
+    cout << "u have registered succrssfully\n" << endl;
 
 }
 

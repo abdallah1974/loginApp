@@ -48,6 +48,8 @@ bool isValidpass(string pass);
 string takePass();
 void changePassword(vector<userProfil> users,string userName);
 void login(vector<userProfil> users);
+string decryption(string input);
+string encryption(string input);
 
 
 #endif // LOGINAPP_H_INCLUDED

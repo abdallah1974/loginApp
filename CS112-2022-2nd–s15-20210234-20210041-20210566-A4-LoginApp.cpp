@@ -18,22 +18,24 @@ int main()
     int choice;
 
     cout << "welcome to login App"<< endl;
-    loadExistingUsers(usersFile,users);
 
 
 
-    cout << "enter 1 to Register" << endl;
-    cout << "enter 2 to Login" << endl;
-    cout << "enter 4 to Exit" << endl;
-    cin >> choice;
-    if (choice == 1){
-        registerUser(newUser,users);
-    }else if (choice == 2){
-        login(users);
+    while(true){
+        loadExistingUsers(usersFile,users);
+        cout << "enter 1 to Register" << endl;
+        cout << "enter 2 to Login" << endl;
+        cout << "enter 4 to Exit" << endl;
+        cin >> choice;
+        if (choice == 1){
+            registerUser(newUser,users);
+        }else if (choice == 2){
+            login(users);
+        }else if (choice == 4){
+            _Exit(0);
+        }
     }
-    else if (choice == 4){
-        _Exit(0);
-    }
+
 
 
     return 0;
