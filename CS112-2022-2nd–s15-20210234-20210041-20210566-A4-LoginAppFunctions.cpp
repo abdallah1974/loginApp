@@ -17,15 +17,19 @@ void loadExistingUsers(fstream& usersFile,vector<userProfil>& users){
             usersFile >> nextUser.fname;
             usersFile >> nextUser.lname;
             usersFile >> nextUser.email;
-            usersFile >> nextUser.password;
+            usersFile>> nextUser.password;
             usersFile >> nextUser.gender;
             usersFile >> nextUser.username;
             usersFile >> nextUser.age;
             usersFile >> nextUser.mobilenumber;
             users.push_back(nextUser);
         }
-    }
 
+    }
+    for (auto one = users.begin(); one != users.end(); one++)
+	{
+        one->password = decryption(one->password);
+	}
     usersFile.close();
 }
 
@@ -246,7 +250,7 @@ void registerUser(userProfil newUser,vector<userProfil> users){
     usersFile << usermobile(newUser)<< " ";
     usersFile << user_name(newUser)<< " ";
     usersFile << useremail(newUser,users)<< " ";
-    usersFile << Password(newUser, users)<< " ";
+    usersFile << encryption(Password(newUser, users)) << " ";
 
 }
 
@@ -486,4 +490,68 @@ void login(vector<userProfil> users)
             changePassword(users,userName);
         }
     }
+}
+
+int mod(int x, int y)
+{
+
+	return (x % y + y) % y;
+}
+
+string encryption(string input)
+{
+    string str;
+	for (int i = 0; i < input.size(); i++)
+	{
+        int constValue = 0, newChar = 0;
+        if(isalpha(input[i]))
+        {
+            if (isupper(input[i]))
+            {
+                constValue = 65;
+                newChar = (5 * (toascii(input[i]) - constValue) + 8) % 26 + constValue;
+            }
+            else if (islower(input[i]))
+            {
+                constValue = 97;
+                newChar = (5 * (toascii(input[i]) - constValue) + 8) % 26 + constValue;
+            }
+        }
+        else
+        {
+            newChar = toascii(input[i]) - 6;
+        }
+
+        str += char(newChar);
+	}
+	return str;
+}
+
+string decryption(string input)
+{
+    string str;
+	for (int i = 0; i < input.size(); i++)
+	{
+        int constValue = 0, newChar = 0;
+        if(isalpha(input[i]))
+        {
+            if (isupper(input[i]))
+            {
+                constValue = 65;
+                newChar = mod(21 * (toascii(input[i]) - constValue - 8), 26) + constValue;
+            }
+            else if (islower(input[i]))
+            {
+                constValue = 97;
+                newChar = mod(21 * (toascii(input[i]) - constValue - 8), 26) + constValue;
+            }
+        }
+        else
+        {
+            newChar = toascii(input[i]) + 6;
+        }
+
+        str += char(newChar);
+	}
+	return str;
 }

@@ -20,21 +20,18 @@ int main()
     cout << "welcome to login App"<< endl;
     loadExistingUsers(usersFile,users);
 
-    for(int i = 0; i < users.size(); i++)
-    {
-        cout << users[i].username << endl;
-    }
+
 
     cout << "enter 1 to Register" << endl;
     cout << "enter 2 to Login" << endl;
-    cout << "enter 3 to change password" << endl;
     cout << "enter 4 to Exit" << endl;
     cin >> choice;
     if (choice == 1){
         registerUser(newUser,users);
     }else if (choice == 2){
         login(users);
-    }else if (choice == 4){
+    }
+    else if (choice == 4){
         _Exit(0);
     }
 
