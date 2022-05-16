@@ -1,46 +1,34 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#include <regex>
-#include <conio.h>
+// FCAI – Programming 1 – 2022 - Assignment 4
+// Program Name: CS112-203-2nd–s15-20210234-20210041-20210566-A4-LoginAppFunctions.cpp
+// Last Modification Date: 15/5/2022
+// Abdallah hassan abdallah  20210234
+// Ahmed mamdouh mohamed     20210041
+// Abdelrahman ahmed ibrahim 20210566
 
-using namespace std;
-
-struct userProfil{
-    string name ;
-    string email;
-    string password;
-    string gender;
-    string username;
-    string age;
-    string mobilenumber;
-};
-
-string userfullname();
-string userage();
-string useremail();
-string usergender();
-string usermobile();
-string user_name();
-string userpassword();
+#include "CS112-2022-2nd–s15-20210234-20210041-20210566-A4-LoginAppFunctions.h"
 
 
+void loadExistingUsers(fstream& usersFile,vector<userProfil>& users){
 
-void loadExistingUsers(vector<userProfil>& users){
-    fstream usersFile;
     usersFile.open("users.txt");
-    while (!usersFile.eof()){
-        userProfil nextUser;
-        usersFile >> nextUser.email;
-        usersFile >> nextUser.password;
-        usersFile >> nextUser.mobilenumber;
-        users.push_back(nextUser);
+    if(usersFile){
+        while (!usersFile.eof()){
+            userProfil nextUser;
+            usersFile >> nextUser.email;
+            usersFile >> nextUser.password;
+            usersFile >> nextUser.mobilenumber;
+            users.push_back(nextUser);
+        }
     }
+
     usersFile.close();
 }
 //--------------------------------------------
 string userfullname(userProfil newUser){
 
     cout << "Enter your full name : ";
+    cin.clear();
+    cin.sync();
     getline(cin , newUser.name);
     regex n("([a-zA-Z]+[ ]+[a-zA-Z]+)");
     while (true){
@@ -98,6 +86,7 @@ string useremail(userProfil newUser,vector<userProfil> users){
                     i = 0;
                 }
             }
+            break;
        }else {
             cout << "\nNot Valid syntax" << endl ;
             cout << "email ex examble@gmail.com " << endl ;
@@ -146,17 +135,17 @@ string usermobile(userProfil newUser){
 }
 //--------------------------------------------
 string user_name(userProfil newUser){
-    cout << "user_name like examble_login  " << endl ;
+    cout << "user_name like AhmedMamdoh  " << endl ;
     cout << "Enter user_name: "  ;
     cin >> newUser.username;
-    regex u("([a-zA-Z]+[_]?[a-zA-Z]+)");
+    regex u("([a-zA-Z]+[a-zA-Z]+)");
     while (true){
         if (regex_match(newUser.username.begin(), newUser.username.end(), u)){
             cout << "Valid user_name" << endl ;
             break;
         }else {
             cout << "unvaild user name" << endl;
-            cout << "user_name like examble_login  " << endl ;
+            cout << "user_name like AhmedMamdoh  " << endl ;
             cout << "Enter user_name: "  ;
             cin >> newUser.username;
         }
@@ -165,7 +154,9 @@ string user_name(userProfil newUser){
 }
 //--------------------------------------------
 void showCondtions(){
-    cout << "..... create a Password ....." << endl;
+
+
+    cout << "\n..... create a Password ....." << endl;
     cout << "it should contain at least\nan uppercase letter, lowercase letter, number and special char"<<endl;
     cout << "special chars like (!@#_$ or space)" << endl;
     cout << "and it must be 12 char or more ... " << endl;
@@ -238,46 +229,29 @@ void reEnterPassword(string& password){
     }
 }
 //--------------------------------------------
-void storeUser(string password){
-    fstream usersFile;
-    usersFile.open("users.txt", ios::app);
-    usersFile << userfullname(newUser) ;
-    usersFile << userage(newUser);
-    usersFile << usergender(newUser);
-    usersFile << usermobile(newUser);
-    usersFile << user_name(newUser);
-    usersFile << useremail(newUser,users);
-    usersFile << password;
-    usersFile << endl;
-
-}
-void Password(){
+string Password(userProfil newUser,vector<userProfil> users){
 
     string  password;
     showCondtions();
     secretPassword(password);
     checkValidation(password);
     reEnterPassword(password);
-    storeUser(password)
+
+    return password;
 }
+//-----------------------------------
+void registerUser(userProfil newUser,vector<userProfil> users){
+    fstream usersFile;
+    usersFile.open("users.txt", ios::app);
+    usersFile << endl;
+    usersFile << userfullname(newUser) << " ";
+    usersFile << userage(newUser)<< " ";
+    usersFile << usergender(newUser)<< " ";
+    usersFile << usermobile(newUser)<< " ";
+    usersFile << user_name(newUser)<< " ";
+    usersFile << useremail(newUser,users)<< " ";
+    usersFile << Password(newUser, users)<< " ";
+
+}
+
 //--------------------------------------------
-int main()
-{
-    vector<userProfil> users;
-    userProfil newUser;
-    cout << "welcome to login App"<< endl;
-    loadExistingUsers(users);
-
-    for(userProfil user: users){
-        cout << user.email << " " << user.password << " " << user.mobilenumber << endl;
-    }
-    userfullname(newUser) ;
-    userage(newUser);
-    usergender(newUser);
-    usermobile(newUser);
-    user_name(newUser);
-    useremail(newUser,users);
-    Password();
-
-    return 0;
-}
