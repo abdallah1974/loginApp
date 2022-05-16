@@ -17,8 +17,11 @@
 using namespace std;
 
 
+
+
 struct userProfil{
-    string name ;
+    string fname ;
+    string lname ;
     string email;
     string password;
     string gender;
@@ -40,5 +43,11 @@ void checkValidation(string& password);
 void reEnterPassword(string& password);
 string Password(userProfil newUser,vector<userProfil> users);
 void registerUser(userProfil newUser,vector<userProfil> users);
+bool isValidName(string name);
+bool isValidpass(string pass);
+string takePass();
+void changePassword(vector<userProfil> users,string userName);
+void login(vector<userProfil> users);
+
 
 #endif // LOGINAPP_H_INCLUDED

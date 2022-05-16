@@ -7,6 +7,9 @@
 
 #include "CS112-2022-2nd–s15-20210234-20210041-20210566-A4-LoginAppFunctions.h"
 
+
+
+
 int main()
 {
     fstream usersFile;
@@ -17,6 +20,11 @@ int main()
     cout << "welcome to login App"<< endl;
     loadExistingUsers(usersFile,users);
 
+    for(int i = 0; i < users.size(); i++)
+    {
+        cout << users[i].username << endl;
+    }
+
     cout << "enter 1 to Register" << endl;
     cout << "enter 2 to Login" << endl;
     cout << "enter 3 to change password" << endl;
@@ -24,6 +32,8 @@ int main()
     cin >> choice;
     if (choice == 1){
         registerUser(newUser,users);
+    }else if (choice == 2){
+        login(users);
     }else if (choice == 4){
         _Exit(0);
     }
